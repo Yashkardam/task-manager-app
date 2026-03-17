@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import API from "../services/api";
 import Navbar from "../components/Navbar";
+
 
 function Dashboard() {
     const [tasks, setTasks] = useState([]);
@@ -15,7 +16,7 @@ function Dashboard() {
     const [loading, setLoading] = useState(false);
 
     // 🔄 Fetch tasks
-    const fetchTasks = async () => {
+    const fetchTasks = useCallback(async () => {
         try {
             setLoading(true);
 
@@ -29,11 +30,11 @@ function Dashboard() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [page, search, status]);
 
     useEffect(() => {
         fetchTasks();
-    }, [page]);
+    }, [fetchTasks]);
 
     // ➕ Create task
     const createTask = async (e) => {
