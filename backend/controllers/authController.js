@@ -30,23 +30,31 @@ exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
 
+        console.log("BODY:", req.body);
+
         const user = await User.findOne({ email });
+        console.log("USER:", user);
+
         if (!user) {
             return res.status(400).json({ message: "User not found" });
         }
+
+        const isMatch = await bcrypt.compare(password, user.password);
 
         if (!isMatch) {
             return res.status(400).json({ message: "Incorrect password" });
         }
 
-        // create token
+        if (!process.env.JWT_SECRET) {
+            throw new Error("JWT_SECRET missing");
+        }
+
         const token = jwt.sign(
             { userId: user._id },
             process.env.JWT_SECRET,
             { expiresIn: "1d" }
         );
 
-        // send cookie
         res.cookie("token", token, {
             httpOnly: true,
             secure: true,
@@ -54,7 +62,9 @@ exports.login = async (req, res) => {
         });
 
         res.json({ message: "Login successful" });
+
     } catch (err) {
+        console.error("LOGIN ERROR:", err.message);
         res.status(500).json({ error: err.message });
     }
 };
