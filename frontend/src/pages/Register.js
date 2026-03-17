@@ -14,19 +14,30 @@ function Register() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h2>Register</h2>
-            <input
-                placeholder="Email"
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-            />
-            <input
-                type="password"
-                placeholder="Password"
-                onChange={(e) => setForm({ ...form, password: e.target.value })}
-            />
-            <button type="submit">Register</button>
-        </form>
+        <>
+            <form onSubmit={handleSubmit}>
+                <h2>Register</h2>
+                <input
+                    placeholder="Email"
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    onChange={(e) => setForm({ ...form, password: e.target.value })}
+                />
+                <button type="submit">Register</button>
+            </form>
+            <p>
+                Already have an account?{" "}
+                <span
+                    style={{ color: "blue", cursor: "pointer" }}
+                    onClick={() => navigate("/")}
+                >
+                    Login
+                </span>
+            </p>
+        </>
     );
 }
 
