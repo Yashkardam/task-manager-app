@@ -26,7 +26,7 @@ function Dashboard() {
 
             setTasks(res.data);
         } catch (err) {
-            console.log("Error fetching tasks:", err);
+            console.log(err);
         } finally {
             setLoading(false);
         }
