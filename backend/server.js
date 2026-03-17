@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
     origin: ["http://localhost:3000",
-        "https://task-manager-app-9r26.onrender.com"
+        "https://task-manager-app-one-puce.vercel.app"
     ],
     credentials: true
 }));
